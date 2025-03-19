@@ -50,7 +50,6 @@ export async function addNewLead(newLead) {
       "https://nexuva-be.vercel.app/leads",
       newLead
     );
-    console.log(response.data);
   } catch (error) {
     console.error("Error: ", error);
   }
@@ -75,7 +74,6 @@ export async function addNewComment({ leadId, commentData }) {
       commentData
     );
     if (response.data) {
-      console.log(response.data);
       return response.data;
     }
   } catch (error) {

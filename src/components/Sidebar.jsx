@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import "../css/sidebar.css";
 
 const Sidebar = () => {
@@ -6,30 +6,30 @@ const Sidebar = () => {
   const urlPath = location.pathname;
 
   return (
-    <section className="col-md-2 p-0">
-      <div style={{ backgroundColor: "#6947e2" }}>
+    <section className="col-md-2 p-0 section-bg-color">
+      <div className="sidebar-title-bg">
         <p className="fs-4 m-0 py-2 text-center text-light">Anvaya</p>
       </div>
 
       {urlPath === "/" || urlPath === "/dashboard" ? (
-        <div className="d-flex flex-column p-2">
-          <Link className="sidebar-links" to="/leads">
+        <div className="d-flex flex-column p-3">
+          <NavLink className="nav-link" to="/leads">
             | Leads
-          </Link>
+          </NavLink>
 
-          <Link className="sidebar-links" to="/agents">
+          <NavLink className="nav-link" to="/agents">
             | Agents
-          </Link>
-          <Link className="sidebar-links" to="/reports">
+          </NavLink>
+          <NavLink className="nav-link" to="/reports">
             | Reports
-          </Link>
+          </NavLink>
         </div>
       ) : (
         <div className="p-2">
           <small>
             <Link
+              className="dashboard-back-link p-3"
               to="/dashboard"
-              style={{ textDecoration: "none" }}
             >{`< Back to Dashboard`}</Link>
           </small>
         </div>

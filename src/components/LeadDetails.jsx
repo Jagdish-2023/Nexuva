@@ -35,7 +35,9 @@ const LeadDetails = () => {
     return `${formattedDate}`;
   };
 
-  const handleCommentSubmit = () => {
+  const handleCommentSubmit = (e) => {
+    e.preventDefault();
+
     const fetchComment = async () => {
       try {
         const updatedLead = await addNewComment({
@@ -43,7 +45,6 @@ const LeadDetails = () => {
           leadId: lead._id,
         });
         if (updatedLead) {
-          console.log(updatedLead);
           setLead(updatedLead);
         }
       } catch (error) {
@@ -52,6 +53,7 @@ const LeadDetails = () => {
     };
 
     fetchComment();
+    setCommentText("");
   };
 
   useEffect(() => {

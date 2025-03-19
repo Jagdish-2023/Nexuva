@@ -214,6 +214,16 @@ const AddLeadForm = ({ leadData = {} }) => {
             <button className="btn btn-warning">
               {leadData.lead ? "Update" : "Create"}
             </button>
+
+            {leadData?.lead && (
+              <button
+                type="button"
+                className="btn btn-danger ms-2"
+                onClick={() => updateLeadState(false)}
+              >
+                Cancel
+              </button>
+            )}
           </div>
         </form>
       </div>

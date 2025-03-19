@@ -18,7 +18,7 @@ function App() {
     <Router>
       <Header />
 
-      <div className="row mt-4 mx-0">
+      <div className="row mt-4 mx-0" style={{ height: "100vh" }}>
         <Sidebar />
 
         <section className="col-md-10 ps-5 py-3">

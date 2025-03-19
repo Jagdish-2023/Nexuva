@@ -100,7 +100,7 @@ const LeadStatus = () => {
       <hr />
 
       {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
+      {error && <p>{error}</p>}
       {leadsByStatus && (
         <div>
           <div>

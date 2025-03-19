@@ -5,13 +5,13 @@ const Header = () => {
   const urlPath = location.pathname;
 
   function showPageHeaderName() {
-    if (urlPath === "/" || urlPath === "/dashboard") return "Anvaya Dashboard";
+    if (urlPath === "/" || urlPath === "/dashboard") return "Nexuva Dashboard";
     if (urlPath === "/add-new-lead") return "Add new Lead";
     if (urlPath === "/leads") return "Lead List";
     if (urlPath === "/agents") return "Sales Agent Management";
     if (urlPath === "/lead-status") return "Leads by Status";
     if (urlPath === "/agent-details") return "Leads by Sales Agent";
-    if (urlPath === "/reports") return "Anvaya CRM Reports";
+    if (urlPath === "/reports") return "Nexuva CRM Reports";
     if (urlPath.startsWith("/leads/")) return "Lead Management";
   }
   return (

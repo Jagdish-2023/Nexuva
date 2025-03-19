@@ -8,7 +8,7 @@ const Sidebar = () => {
   return (
     <section className="col-md-2 p-0 section-bg-color">
       <div className="sidebar-title-bg">
-        <p className="fs-4 m-0 py-2 text-center text-light">Anvaya</p>
+        <p className="fs-4 m-0 py-2 text-center text-light">Nexuva</p>
       </div>
 
       {urlPath === "/" || urlPath === "/dashboard" ? (

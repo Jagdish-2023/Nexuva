@@ -64,30 +64,30 @@ const Agents = () => {
   }, []);
   return (
     <div>
-      <h5>{isAddAgent ? "Add new Agent" : "Sales Agent List"}</h5>
+      <h3>{isAddAgent ? "Add new Agent" : "Sales Agent List"}</h3>
       <hr />
 
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       {agents.length > 0 && !isAddAgent && !error && (
         <div>
-          <div>
-            <ul>
-              {agents.map((agent) => (
-                <li key={agent._id}>
-                  <Link
-                    to={`/agent-details?salesAgent=${agent.name}`}
-                    className="agents-links"
-                  >
-                    {agent.name} - {agent.email}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="row">
+            {agents.map((agent) => (
+              <div key={agent._id} className="col-md-4 mb-4">
+                <div className="card bg-light">
+                  <div className="card-body">
+                    <h5 className="card-title">{agent.name}</h5>
+                    <p>{agent.email}</p>
+                    <Link to={`/agent-details?salesAgent=${agent.name}`}>
+                      See Details
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className="mt-4">
-            <hr />
             <button
               className="btn btn-warning"
               onClick={() => setIsAddAgent(true)}

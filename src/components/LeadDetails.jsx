@@ -74,8 +74,13 @@ const LeadDetails = () => {
   }, [leadId]);
   return (
     <div>
-      <h5>Lead Details:</h5>
-      <hr />
+      {!isEditLead && (
+        <>
+          {" "}
+          <h3>Lead Details:</h3>
+          <hr />
+        </>
+      )}
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       {lead && (

@@ -3,6 +3,11 @@
     text-decoration: none;
 }
 
+.card-status-container {
+    display: inline-block;
+    border: 1px solid #ffc107;
+}
+
 /* .react-Links:hover {
     color: #0d6efd;
 } */

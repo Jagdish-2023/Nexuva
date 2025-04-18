@@ -12,20 +12,20 @@ const Sidebar = () => {
       </div>
 
       {urlPath === "/" || urlPath === "/dashboard" ? (
-        <div className="d-flex flex-column p-3">
+        <div className="d-flex flex-column p-3 align-items-center gap-3">
           <NavLink className="nav-link" to="/leads">
-            | Leads
+            Leads
           </NavLink>
 
           <NavLink className="nav-link" to="/agents">
-            | Agents
+            Agents
           </NavLink>
           <NavLink className="nav-link" to="/reports">
-            | Reports
+            Reports
           </NavLink>
         </div>
       ) : (
-        <div className="p-2">
+        <div className="mt-3 text-center">
           <small>
             <Link
               className="dashboard-back-link p-3"

@@ -145,7 +145,7 @@ const Reports = () => {
   }, []);
   return (
     <div>
-      <h5>Report Overview</h5>
+      <h3>Report Overview</h3>
       <hr />
 
       {loading && <p>Loading...</p>}

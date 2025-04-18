@@ -16,12 +16,12 @@ import Reports from "./components/Reports";
 function App() {
   return (
     <Router>
-      <Header />
+      {/* <Header /> */}
 
-      <div className="row mt-4 mx-0" style={{ height: "100vh" }}>
+      <div className="row mx-0" style={{ height: "100vh" }}>
         <Sidebar />
 
-        <section className="col-md-10 ps-5 py-3">
+        <section className="col-md-10 px-5 py-3">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />

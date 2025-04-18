@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { fetchAllLeads } from "../API/api.fetch";
 import "../css/agentDetails.css";
@@ -74,63 +74,88 @@ const AgentDetails = () => {
 
   return (
     <div>
-      <h5>Lead list by Agent</h5>
+      <h3>Lead list by Agent</h3>
       <hr />
-      {loading && <p>Loading...</p>}
+      {loading && agentLeads.length < 1 && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      {agentLeads && (
+      {agentLeads.length > 0 && (
         <div>
-          <p>Sales Agent: {queryparams.salesAgent}</p>
+          <h5>{queryparams.salesAgent}</h5>
 
           <div>
             {!error && agentLeads && (
-              <ol>
-                {agentLeads.length > 0 &&
-                  agentLeads.map((lead) => (
-                    <li key={lead._id}>
-                      {lead.name} - {lead.status} - {lead.priority} -{" "}
-                      {lead.timeToClose} days to close
-                    </li>
-                  ))}
-              </ol>
+              <>
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex gap-2">
+                    <div className="d-flex align-items-center">
+                      <p className="m-0">Filters:</p>
+                    </div>
+                    <div>
+                      <select
+                        className="form-select form-select-filter"
+                        onChange={handleStatusSelect}
+                        value={selectedStatus}
+                      >
+                        <option value="">Select Status</option>
+                        <option value="New">New</option>
+                        <option value="Contacted">Contacted</option>
+                        <option value="Qualified">Qualified</option>
+                        <option value="Proposal Sent">Proposal Sent</option>
+                        <option value="Closed">Closed</option>
+                      </select>
+                    </div>
+                    <div>
+                      <select
+                        className="form-select form-select-filter"
+                        onChange={handlePrioritySelect}
+                        value={selectedPriority}
+                      >
+                        <option value="">Select Priority</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span>Sort by: </span>
+                    <label>
+                      <input type="checkbox" onChange={handleSortFilter} /> Time
+                      to close
+                    </label>
+                  </div>
+                </div>
+
+                <section className="mt-2">
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Lead Name</th>
+                        <th>Status</th>
+                        <th>Time to close</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {agentLeads.length > 0 &&
+                        agentLeads.map((lead, index) => (
+                          <tr key={lead._id}>
+                            <th scope="row">{index + 1}</th>
+                            <td>{lead.name}</td>
+                            <td>{lead.status}</td>
+                            <td>{lead.timeToClose} days</td>
+                            <td>
+                              <Link to={`/leads/${lead._id}`}>Details</Link>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </section>
+              </>
             )}
-          </div>
-
-          <div>
-            <p>Filters: </p>
-            <select
-              className="form-select form-select-filter"
-              onChange={handleStatusSelect}
-              value={selectedStatus}
-            >
-              <option value="">Select Status</option>
-              <option value="New">New</option>
-              <option value="Contacted">Contacted</option>
-              <option value="Qualified">Qualified</option>
-              <option value="Proposal Sent">Proposal Sent</option>
-              <option value="Closed">Closed</option>
-            </select>
-
-            <span className="mx-2">Or</span>
-
-            <select
-              className="form-select form-select-filter"
-              onChange={handlePrioritySelect}
-              value={selectedPriority}
-            >
-              <option value="">Select Priority</option>
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
-            </select>
-          </div>
-
-          <div className="mt-3">
-            <span>Sort by: </span>
-            <label>
-              <input type="checkbox" onChange={handleSortFilter} /> Time to
-              close
-            </label>
           </div>
         </div>
       )}

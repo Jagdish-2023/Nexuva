@@ -2,8 +2,10 @@ import "../css/lead.css";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { fetchAllLeads } from "../API/api.fetch";
+import Sidebar from "./Sidebar";
 
 const Leads = () => {
+  const storageToken = localStorage.getItem("nexuvaToken");
   const navigate = useNavigate();
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -54,129 +56,146 @@ const Leads = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchLeadsAsync = async () => {
-      try {
-        const allLeads = await fetchAllLeads(queryParams);
+  const fetchLeadsAsync = async () => {
+    try {
+      const allLeads = await fetchAllLeads(queryParams);
 
-        if (allLeads.length > 0) {
-          setLeads(allLeads);
-          setError(null);
-        }
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+      if (allLeads.length > 0) {
+        setLeads(allLeads);
+        setError(null);
       }
-    };
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchLeadsAsync();
-  }, [searchParams]);
+  useEffect(() => {
+    if (!storageToken) {
+      navigate("/");
+    } else {
+      fetchLeadsAsync();
+    }
+  }, [searchParams, storageToken]);
   return (
     <div>
-      <h3>Leads Overview</h3>
-      <hr />
-      {error && <p>{error}</p>}
-      {loading && <p>Loading......</p>}
+      {storageToken && (
+        <div className="row mx-0" style={{ height: "100vh" }}>
+          <Sidebar />
+          <section className="col-md-10 px-5 py-3">
+            <div>
+              <h3>Leads Overview</h3>
+              <hr />
+              {error && <p>{error}</p>}
+              {loading && <p>Loading......</p>}
 
-      {leads.length > 0 && (
-        <div className="mt-4">
-          {!error && (
-            <>
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="d-flex gap-1">
-                  <div className="d-flex align-items-center">
-                    <p className="m-0">Filters:</p>
-                  </div>
-                  <div>
-                    <select
-                      id="agentFilter"
-                      className="form-select"
-                      onChange={(e) =>
-                        handleFilter("salesAgent", e.target.value)
-                      }
-                      value={selectedAgent}
-                    >
-                      <option value="">Sales Agent</option>
-                      <option value="John Doe">John Doe</option>
-                      <option value="Bob Johnson">Bob Johnson</option>
-                      <option value="Alice Smith">Alice Smith</option>
-                      <option value="Loice Lane">Loice Lane</option>
-                    </select>
-                  </div>
-                  <div>
-                    <select
-                      id="statusFilter"
-                      className="form-select"
-                      onChange={(e) => handleFilter("status", e.target.value)}
-                      value={selectedStatus}
-                    >
-                      <option value="">Status</option>
-                      <option value="New">New</option>
-                      <option value="Contacted">Contacted</option>
-                    </select>
-                  </div>
-                  <div>
-                    <select
-                      id="sortFilter"
-                      className="form-select"
-                      onChange={handleSortFilter}
-                    >
-                      <option value="">Sort by</option>
-                      <option value="Priority">Priority</option>
-                      <option value="Time to Close">Time to close</option>
-                    </select>
-                  </div>
-                </div>
+              {leads.length > 0 && (
+                <div className="mt-4">
+                  {!error && (
+                    <>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex gap-1">
+                          <div className="d-flex align-items-center">
+                            <p className="m-0">Filters:</p>
+                          </div>
+                          <div>
+                            <select
+                              id="agentFilter"
+                              className="form-select"
+                              onChange={(e) =>
+                                handleFilter("salesAgent", e.target.value)
+                              }
+                              value={selectedAgent}
+                            >
+                              <option value="">Sales Agent</option>
+                              <option value="John Doe">John Doe</option>
+                              <option value="Bob Johnson">Bob Johnson</option>
+                              <option value="Alice Smith">Alice Smith</option>
+                              <option value="Loice Lane">Loice Lane</option>
+                            </select>
+                          </div>
+                          <div>
+                            <select
+                              id="statusFilter"
+                              className="form-select"
+                              onChange={(e) =>
+                                handleFilter("status", e.target.value)
+                              }
+                              value={selectedStatus}
+                            >
+                              <option value="">Status</option>
+                              <option value="New">New</option>
+                              <option value="Contacted">Contacted</option>
+                            </select>
+                          </div>
+                          <div>
+                            <select
+                              id="sortFilter"
+                              className="form-select"
+                              onChange={handleSortFilter}
+                            >
+                              <option value="">Sort by</option>
+                              <option value="Priority">Priority</option>
+                              <option value="Time to Close">
+                                Time to close
+                              </option>
+                            </select>
+                          </div>
+                        </div>
 
-                <div>
-                  <button
-                    className="btn btn-warning"
-                    onClick={() => navigate("/add-new-lead")}
-                  >
-                    New Lead
-                  </button>
-                </div>
-              </div>
-
-              <div className="row mt-3">
-                {leads.map((lead) => (
-                  <div key={lead._id} className="col-md-4 mb-4">
-                    <div className="card">
-                      <div className="card-header d-flex justify-content-between align-items-center">
-                        <h5>{lead.name}</h5>
-                        <p
-                          className={`${
-                            lead.status === "Closed"
-                              ? "text-success"
-                              : "text-warning"
-                          }`}
-                        >
-                          {lead.status}
-                        </p>
+                        <div>
+                          <button
+                            className="btn btn-warning"
+                            onClick={() => navigate("/add-new-lead")}
+                          >
+                            New Lead
+                          </button>
+                        </div>
                       </div>
-                      <div className="card-body">
-                        <p className="card-text">
-                          <strong>Sales Agent: </strong>
-                          {lead.salesAgent.name}
-                        </p>
-                        <p className="card-text">
-                          <strong>Priority: </strong>
-                          {lead.priority}
-                        </p>
-                        <p className="card-text">
-                          <strong>Time to close: </strong>
-                          {lead.timeToClose} days
-                        </p>
 
-                        <Link to={`/leads/${lead._id}`}>See More</Link>
+                      <div className="row mt-3">
+                        {leads.map((lead) => (
+                          <div key={lead._id} className="col-md-4 mb-4">
+                            <div className="card">
+                              <div className="card-header d-flex justify-content-between align-items-center">
+                                <h5>{lead.name}</h5>
+                                <p
+                                  className={`${
+                                    lead.status === "Closed"
+                                      ? "text-success"
+                                      : "text-warning"
+                                  }`}
+                                >
+                                  {lead.status}
+                                </p>
+                              </div>
+                              <div className="card-body">
+                                <p className="card-text">
+                                  <strong>Sales Agent: </strong>
+                                  {lead.salesAgent.name}
+                                </p>
+                                <p className="card-text">
+                                  <strong>Priority: </strong>
+                                  {lead.priority}
+                                </p>
+                                <p className="card-text">
+                                  <strong>Time to close: </strong>
+                                  {lead.timeToClose} days
+                                </p>
+
+                                <Link to={`/leads/${lead._id}`}>See More</Link>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          </section>
         </div>
       )}
     </div>

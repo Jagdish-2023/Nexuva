@@ -1,6 +1,11 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import "../css/sidebar.css";
 
+export const handleLogout = () => {
+  localStorage.removeItem("nexuvaToken");
+  window.location.href = "/";
+};
+
 const Sidebar = () => {
   const location = useLocation();
   const urlPath = location.pathname;
@@ -23,15 +28,22 @@ const Sidebar = () => {
           <NavLink className="nav-link" to="/reports">
             Reports
           </NavLink>
+          <NavLink className="nav-link" to="/profile">
+            Setting
+          </NavLink>
+
+          <NavLink className="mt-3 nav-link text-danger" onClick={handleLogout}>
+            Logout
+          </NavLink>
         </div>
       ) : (
-        <div className="mt-3 text-center">
-          <small>
+        <div className="mt-4 text-center">
+          <p>
             <Link
               className="dashboard-back-link p-3"
               to="/dashboard"
             >{`< Back to Dashboard`}</Link>
-          </small>
+          </p>
         </div>
       )}
     </section>

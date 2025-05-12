@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+
+import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom";
 import { fetchAllLeads, fetchSalesAgents } from "../API/api.fetch";
 import {
   Chart as ChartJS,
@@ -39,6 +42,8 @@ const leadsStatusBarChartOptions = {
 };
 
 const Reports = () => {
+  const navigate = useNavigate();
+  const storageToken = localStorage.getItem("nexuvaToken");
   const [salesAgents, setSalesAgents] = useState([]);
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -122,69 +127,82 @@ const Reports = () => {
     ],
   };
 
-  useEffect(() => {
-    const fetchLeadsAsync = async () => {
-      try {
-        setLoading(true);
-        const allLeads = await fetchAllLeads();
-        const allAgents = await fetchSalesAgents();
-        if (allLeads.length > 0) {
-          setLeads(allLeads);
-        }
-        if (allAgents.length > 0) {
-          setSalesAgents(allAgents);
-        }
-      } catch (error) {
-        setError(error.message || "Failed to fetch Leads");
-      } finally {
-        setLoading(false);
+  const fetchLeadsAsync = async () => {
+    try {
+      setLoading(true);
+      const allLeads = await fetchAllLeads();
+      const allAgents = await fetchSalesAgents();
+      if (allLeads.length > 0) {
+        setLeads(allLeads);
       }
-    };
+      if (allAgents.length > 0) {
+        setSalesAgents(allAgents);
+      }
+    } catch (error) {
+      setError(error.message || "Failed to fetch Leads");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchLeadsAsync();
-  }, []);
+  useEffect(() => {
+    if (!storageToken) {
+      navigate("/");
+    } else {
+      fetchLeadsAsync();
+    }
+  }, [navigate, storageToken]);
   return (
     <div>
-      <h3>Report Overview</h3>
-      <hr />
+      {storageToken && (
+        <div className="row mx-0" style={{ height: "100vh" }}>
+          <Sidebar />
+          <section className="col-md-10 px-5 py-3">
+            <div>
+              <h3>Report Overview</h3>
+              <hr />
 
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      {!error && !loading && leads && salesAgents && (
-        <div>
-          <div>
-            <h6>Total Leads closed and in Pipeline: </h6>
-            <div style={{ width: "300px", margin: "auto" }}>
-              <Pie
-                data={totalClosedAndInPipelineData}
-                options={pieChartOptions}
-                width={300}
-                height={300}
-              />
-            </div>
-            <hr />
-          </div>
+              {loading && <p>Loading...</p>}
+              {error && <p>{error}</p>}
+              {!error && !loading && leads && salesAgents && (
+                <div>
+                  <div>
+                    <h6>Total Leads closed and in Pipeline: </h6>
+                    <div style={{ width: "300px", margin: "auto" }}>
+                      <Pie
+                        data={totalClosedAndInPipelineData}
+                        options={pieChartOptions}
+                        width={300}
+                        height={300}
+                      />
+                    </div>
+                    <hr />
+                  </div>
 
-          <div>
-            <h6>Leads closed by Sales Agent:</h6>
-            <div style={{ width: "500px", margin: "auto" }}>
-              <Bar
-                data={closedLeadsByAgentData}
-                options={closedLeadsBarChartOptions}
-              />
-            </div>
-            <hr />
-          </div>
+                  <div>
+                    <h6>Leads closed by Sales Agent:</h6>
+                    <div style={{ width: "500px", margin: "auto" }}>
+                      <Bar
+                        data={closedLeadsByAgentData}
+                        options={closedLeadsBarChartOptions}
+                      />
+                    </div>
+                    <hr />
+                  </div>
 
-          <div>
-            <h6>Lead Status Distribution:</h6>
-            <div style={{ width: "500px", margin: "auto" }}>
-              <Bar
-                data={leadsStatusData}
-                options={leadsStatusBarChartOptions}
-              />
+                  <div>
+                    <h6>Lead Status Distribution:</h6>
+                    <div style={{ width: "500px", margin: "auto" }}>
+                      <Bar
+                        data={leadsStatusData}
+                        options={leadsStatusBarChartOptions}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
+          </section>
         </div>
       )}
     </div>

@@ -3,6 +3,7 @@ import Select from "react-select";
 import { fetchSalesAgents, addNewLead, updateLead } from "../API/api.fetch";
 import Sidebar from "./Sidebar";
 import { useNavigate } from "react-router-dom";
+import "../App.css";
 
 const AddLeadForm = ({ leadData = {} }) => {
   const navigate = useNavigate();
@@ -92,11 +93,11 @@ const AddLeadForm = ({ leadData = {} }) => {
   }, [navigate, storageToken]);
 
   return (
-    <div>
+    <>
       {storageToken && (
-        <div className="row mx-0" style={{ height: "100vh" }}>
+        <>
           {!lead && <Sidebar />}
-          <section className={`col-md-10 py-3 ${!lead && "px-5"}`}>
+          <div className={`py-3 ${!lead && "px-5 main-container"}`}>
             <div>
               <h5>{!lead ? "Add a new Lead" : "Update lead"}</h5>
               <hr />
@@ -241,10 +242,10 @@ const AddLeadForm = ({ leadData = {} }) => {
                 </form>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </>
       )}
-    </div>
+    </>
   );
 };
 

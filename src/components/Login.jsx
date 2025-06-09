@@ -77,6 +77,13 @@ const Login = ({ path }) => {
     }
   };
 
+  const handleGuestLogin = () => {
+    const email = "john@example.com";
+    const password = "John@123";
+
+    signInUser({ email, password });
+  };
+
   return (
     <>
       {!storageToken && (
@@ -186,19 +193,38 @@ const Login = ({ path }) => {
                   <button className="btn btn-primary">
                     {isSignup ? "Sign Up" : "Sign In"}
                   </button>
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary"
-                    onClick={() => {
-                      setFullName("");
-                      setEmail("");
-                      setPassword("");
-                      setIsSignup((prev) => (prev ? false : true));
-                      setError(null);
-                    }}
-                  >
-                    {isSignup ? "Sign In" : "Sign Up"}
-                  </button>
+
+                  <div className="d-flex align-items-center text-muted">
+                    <hr className="flex-grow-1" />
+                    <span className="mx-2">Or</span>
+                    <hr className="flex-grow-1" />
+                  </div>
+
+                  <div className="d-flex gap-2">
+                    <button
+                      type="button"
+                      className={`btn btn-outline-primary ${
+                        isSignup ? "w-100" : "w-50"
+                      }`}
+                      onClick={() => {
+                        setFullName("");
+                        setEmail("");
+                        setPassword("");
+                        setIsSignup((prev) => (prev ? false : true));
+                        setError(null);
+                      }}
+                    >
+                      {isSignup ? "Sign In" : "Sign Up"}
+                    </button>
+                    {!isSignup && (
+                      <button
+                        className="btn btn-outline-primary w-50"
+                        onClick={handleGuestLogin}
+                      >
+                        Guest Login
+                      </button>
+                    )}
+                  </div>
                 </div>
               </form>
             )}
@@ -209,6 +235,7 @@ const Login = ({ path }) => {
                   Account registered successfully
                 </p>
                 <p
+                  style={{ cursor: "pointer" }}
                   className="text-center"
                   onClick={() => {
                     setIsSignup(false);

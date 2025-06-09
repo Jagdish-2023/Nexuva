@@ -3,6 +3,7 @@ import { fetchSalesAgents, addNewAgent } from "../API/api.fetch";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/agents.css";
 import Sidebar from "./Sidebar";
+import "../App.css";
 
 const Agents = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -72,9 +73,9 @@ const Agents = () => {
   return (
     <div>
       {storageToken && (
-        <div className="row mx-0" style={{ height: "100vh" }}>
+        <>
           <Sidebar />
-          <section className="col-md-10 px-5 py-3">
+          <main className="px-5 py-3 main-container">
             <div>
               <h3>{isAddAgent ? "Add new Agent" : "Sales Agent List"}</h3>
               <hr />
@@ -155,8 +156,8 @@ const Agents = () => {
                 </div>
               )}
             </div>
-          </section>
-        </div>
+          </main>
+        </>
       )}
     </div>
   );

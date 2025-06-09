@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { fetchAllLeads } from "../API/api.fetch";
 import "../css/agentDetails.css";
 import Sidebar from "./Sidebar";
+import "../App.css";
 
 const AgentDetails = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -82,9 +83,9 @@ const AgentDetails = () => {
   return (
     <div>
       {storageToken && (
-        <div className="row mx-0" style={{ height: "100vh" }}>
+        <>
           <Sidebar />
-          <section className="col-md-10 px-5 py-3">
+          <main className="px-5 py-3 main-container">
             <div>
               <h3>Lead list by Agent</h3>
               <hr />
@@ -179,8 +180,8 @@ const AgentDetails = () => {
                 </div>
               )}
             </div>
-          </section>
-        </div>
+          </main>
+        </>
       )}
     </div>
   );

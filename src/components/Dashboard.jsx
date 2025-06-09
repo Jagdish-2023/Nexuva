@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { fetchAllLeads } from "../API/api.fetch";
 import "../css/dashboard.css";
 import Sidebar from "./Sidebar";
+import "../App.css";
 
 const Dashboard = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -69,12 +70,12 @@ const Dashboard = () => {
   }, [leads, statusFilter, storageToken]);
 
   return (
-    <div>
+    <>
       {storageToken && (
-        <div className="row mx-0" style={{ height: "100vh" }}>
+        <>
           <Sidebar />
 
-          <section className="col-md-10 px-5 py-3">
+          <main className="px-5 py-3 main-container">
             <div>
               {loading && <p>Loading...</p>}
 
@@ -230,10 +231,10 @@ const Dashboard = () => {
                 </div>
               )}
             </div>
-          </section>
-        </div>
+          </main>
+        </>
       )}
-    </div>
+    </>
   );
 };
 

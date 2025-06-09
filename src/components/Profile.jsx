@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchProfileAsync } from "../API/api.fetch";
 import { handleLogout } from "./Sidebar";
+import "../App.css";
 
 const Profile = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -36,9 +37,9 @@ const Profile = () => {
   return (
     <div>
       {storageToken && (
-        <div className="row mx-0" style={{ height: "100vh" }}>
+        <>
           <Sidebar />
-          <section className="col-md-10 px-5 py-3">
+          <main className="px-5 py-3 main-container">
             <h5>Your Profile</h5>
             <hr />
             <div>
@@ -68,8 +69,8 @@ const Profile = () => {
                 </>
               )}
             </div>
-          </section>
-        </div>
+          </main>
+        </>
       )}
     </div>
   );

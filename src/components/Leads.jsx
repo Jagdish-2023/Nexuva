@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { fetchAllLeads } from "../API/api.fetch";
 import Sidebar from "./Sidebar";
+import "../App.css";
 
 const Leads = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -79,11 +80,11 @@ const Leads = () => {
     }
   }, [searchParams, storageToken]);
   return (
-    <div>
+    <>
       {storageToken && (
-        <div className="row mx-0" style={{ height: "100vh" }}>
+        <>
           <Sidebar />
-          <section className="col-md-10 px-5 py-3">
+          <main className="px-5 py-3 main-container">
             <div>
               <h3>Leads Overview</h3>
               <hr />
@@ -195,10 +196,10 @@ const Leads = () => {
                 </div>
               )}
             </div>
-          </section>
-        </div>
+          </main>
+        </>
       )}
-    </div>
+    </>
   );
 };
 

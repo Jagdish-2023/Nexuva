@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchLeadDetails, addNewComment } from "../API/api.fetch";
 import AddLeadForm from "./AddLeadForm";
 import Sidebar from "./Sidebar";
+import "../App.css";
 
 const LeadDetails = () => {
   const storageTooken = localStorage.getItem("nexuvaToken");
@@ -81,11 +82,11 @@ const LeadDetails = () => {
     }
   }, [leadId, navigate, storageTooken]);
   return (
-    <div>
+    <>
       {storageTooken && (
-        <div className="row mx-0" style={{ height: "100vh" }}>
+        <>
           <Sidebar />
-          <section className="col-md-10 px-5 py-3">
+          <main className="px-5 py-3 main-container">
             <div>
               {!isEditLead && (
                 <>
@@ -177,10 +178,10 @@ const LeadDetails = () => {
                 </div>
               )}
             </div>
-          </section>
-        </div>
+          </main>
+        </>
       )}
-    </div>
+    </>
   );
 };
 

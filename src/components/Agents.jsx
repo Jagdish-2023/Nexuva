@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../css/agents.css";
 import Sidebar from "./Sidebar";
 import "../App.css";
+import Spinner from "./Spinner";
 
 const Agents = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -80,7 +81,7 @@ const Agents = () => {
               <h3>{isAddAgent ? "Add new Agent" : "Sales Agent List"}</h3>
               <hr />
 
-              {loading && <p>Loading...</p>}
+              {loading && <Spinner />}
               {error && <p>Error: {error}</p>}
               {agents.length > 0 && !isAddAgent && !error && (
                 <div>

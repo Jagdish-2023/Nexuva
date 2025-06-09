@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../App.css";
+import Spinner from "./Spinner";
 
 import Sidebar from "./Sidebar";
 import { useNavigate } from "react-router-dom";
@@ -163,7 +164,7 @@ const Reports = () => {
               <h3>Report Overview</h3>
               <hr />
 
-              {loading && <p>Loading...</p>}
+              {loading && <Spinner />}
               {error && <p>{error}</p>}
               {!error && !loading && leads && salesAgents && (
                 <div>

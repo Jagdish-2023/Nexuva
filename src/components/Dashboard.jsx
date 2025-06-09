@@ -4,6 +4,7 @@ import { fetchAllLeads } from "../API/api.fetch";
 import "../css/dashboard.css";
 import Sidebar from "./Sidebar";
 import "../App.css";
+import Spinner from "./Spinner";
 
 const Dashboard = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -77,7 +78,7 @@ const Dashboard = () => {
 
           <main className="px-5 py-3 main-container">
             <div>
-              {loading && <p>Loading...</p>}
+              {loading && <Spinner />}
 
               {leads.length > 0 && (
                 <div>

@@ -4,6 +4,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { fetchAllLeads } from "../API/api.fetch";
 import Sidebar from "./Sidebar";
 import "../App.css";
+import Spinner from "./Spinner";
 
 const Leads = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -89,7 +90,7 @@ const Leads = () => {
               <h3>Leads Overview</h3>
               <hr />
               {error && <p>{error}</p>}
-              {loading && <p>Loading......</p>}
+              {loading && <Spinner />}
 
               {leads.length > 0 && (
                 <div className="mt-4">

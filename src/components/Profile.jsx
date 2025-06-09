@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchProfileAsync } from "../API/api.fetch";
 import { handleLogout } from "./Sidebar";
 import "../App.css";
+import Spinner from "./Spinner";
 
 const Profile = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -43,7 +44,7 @@ const Profile = () => {
             <h5>Your Profile</h5>
             <hr />
             <div>
-              {loading && <p>Loading...</p>}
+              {loading && <Spinner />}
               {error && <p>Error</p>}
               {data && (
                 <>

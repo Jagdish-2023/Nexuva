@@ -4,6 +4,7 @@ import { fetchAllLeads } from "../API/api.fetch";
 import "../css/agentDetails.css";
 import Sidebar from "./Sidebar";
 import "../App.css";
+import Spinner from "./Spinner";
 
 const AgentDetails = () => {
   const storageToken = localStorage.getItem("nexuvaToken");
@@ -89,7 +90,7 @@ const AgentDetails = () => {
             <div>
               <h3>Lead list by Agent</h3>
               <hr />
-              {loading && agentLeads.length < 1 && <p>Loading...</p>}
+              {loading && agentLeads.length < 1 && <Spinner />}
               {error && <p>{error}</p>}
               {agentLeads.length > 0 && (
                 <div>

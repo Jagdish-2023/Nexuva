@@ -4,6 +4,7 @@ import { fetchLeadDetails, addNewComment } from "../API/api.fetch";
 import AddLeadForm from "./AddLeadForm";
 import Sidebar from "./Sidebar";
 import "../App.css";
+import Spinner from "./Spinner";
 
 const LeadDetails = () => {
   const storageTooken = localStorage.getItem("nexuvaToken");
@@ -95,7 +96,7 @@ const LeadDetails = () => {
                   <hr />
                 </>
               )}
-              {loading && <p>Loading...</p>}
+              {loading && <Spinner />}
               {error && <p>{error}</p>}
               {lead && (
                 <div>

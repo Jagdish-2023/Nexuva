@@ -190,7 +190,7 @@ const Login = ({ path }) => {
                 )}
 
                 <div className="d-grid gap-2 mt-3">
-                  <button className="btn btn-primary">
+                  <button className="btn btn-primary" disabled={isLoading}>
                     {isSignup ? "Sign Up" : "Sign In"}
                   </button>
 
@@ -203,6 +203,7 @@ const Login = ({ path }) => {
                   <div className="d-flex gap-2">
                     <button
                       type="button"
+                      disabled={isLoading}
                       className={`btn btn-outline-primary ${
                         isSignup ? "w-100" : "w-50"
                       }`}
@@ -218,8 +219,10 @@ const Login = ({ path }) => {
                     </button>
                     {!isSignup && (
                       <button
+                        type="button"
                         className="btn btn-outline-primary w-50"
                         onClick={handleGuestLogin}
+                        disabled={isLoading}
                       >
                         Guest Login
                       </button>
